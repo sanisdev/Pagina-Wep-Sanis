@@ -70,7 +70,7 @@ export default function AccountAdmin() {
 
 	useEffect(() => {
 		fetchAccounts();
-	}, [searchQuery, page, pageSize]);
+	}, [searchQuery, page]);
 
 	const handleEdit = (account: Usuario) => {
 		setSelectedAccount(account);
@@ -103,7 +103,7 @@ export default function AccountAdmin() {
 				life: 3000,
 			});
 			setIsDialogVisible(false);
-			fetchAccounts()
+			fetchAccounts();
 		} catch (error) {
 			toast.current?.show({
 				severity: "error",
@@ -376,13 +376,14 @@ export default function AccountAdmin() {
 							/>
 						</div>
 						<DataTable
-							value={accounts}
-							paginator
-							rows={pageSize}
-							totalRecords={total}
-							onPage={(e) => setPage(e.page! + 1)}
-							selectionMode="single"
-							onRowSelect={(e) => handleEdit(e.data as Usuario)}
+							value={accounts} // Registros de la tabla
+							paginator // Activa el paginador
+							rows={pageSize} // Tamaño de página
+							totalRecords={total} // Total de registros
+							lazy // Carga dinámica
+							loading={loading} // Indicador de carga
+							first={(page - 1) * pageSize} // Índice inicial de la página
+							onPage={(e) => setPage(e.page! + 1)} // Cambia la página actual
 						>
 							<Column
 								field="numero_accion"
@@ -420,10 +421,9 @@ export default function AccountAdmin() {
 				header="Editar Cuenta"
 				onHide={() => setIsDialogVisible(false)}
 				className="w-[20rem] "
-				
 			>
 				<form>
-					<div className="mb-4" >
+					<div className="mb-4">
 						<label
 							htmlFor="nombre"
 							className="block text-sm font-medium text-gray-700"

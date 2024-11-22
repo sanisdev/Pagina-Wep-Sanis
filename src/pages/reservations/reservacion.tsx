@@ -200,7 +200,7 @@ const ReservacionForm: React.FC = () => {
 		try {
 			await agregarReservacion(reservationData); // Llama a tu API con los datos de la reservación
 			// alert("Reservación creada exitosamente!");
-			Navigate("/Adeudos");
+			Navigate("/resumenReservacion");
 			// Opcional: Puedes redirigir o limpiar el formulario aquí
 		} catch (error) {
 			console.error("Error al agregar la reservación:", error);
