@@ -70,8 +70,6 @@ const Palapas = () => {
 	];
 	const icon = <i className="pi pi-eye"></i>;
 
-
-
 	const nextImage = () => {
 		setCurrentImage((currentImage + 1) % images.length);
 	};
@@ -108,7 +106,7 @@ const Palapas = () => {
 	];
 
 	return (
-		<div className="grid  mt-16 justify-center w-full min-h-[100vh] md:min-h-[90vh] px-4 relative pt-10">
+		<div className="grid  mt-16 md:mt-0 justify-center w-full min-h-[100vh] md:min-h-[90vh] px-4 relative pt-10 md:pt-0">
 			{selectedPalapa === null && (
 				<div className="grid grid-cols-1 sm:grid-cols-2 pt-6 md:grid-cols-4 gap-6 w-full justify-center align-middle">
 					<div
@@ -252,17 +250,16 @@ const Palapas = () => {
 						{images[selectedPalapa - 1].map((image, index) => (
 							<div
 								key={index}
-								className="hidden md:block text-center"
+								className="hidden md:flex justify-center items-center"
 							>
-								<div className="w-[350px] h-[200px] overflow-hidden">
-									{" "}
+								<div className="w-full max-w-[20rem] h-auto overflow-hidden md:w-[15rem] lg:w-[22rem]">
 									{/* Contenedor padre */}
 									<Image
 										src={image}
 										indicatorIcon={icon}
 										alt="Image"
 										preview
-										className="w-full h-full object-fill " // Ajusta la imagen sin recortarla
+										className="w-full h-full object-cover"
 									/>
 								</div>
 							</div>

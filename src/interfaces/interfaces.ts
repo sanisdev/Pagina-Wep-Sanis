@@ -135,9 +135,14 @@ export interface UpdateInvitadosBatchDto {
 	invitados: Invitado[];
 }
 
+export interface UsuarioSimplificado {
+	nombre: string;
+  }
+
 // Interfaz para cada reservación del día
 export interface ResponseReservacionDia {
 	id: number;
+	usuario: UsuarioSimplificado;
 	palapa: Palapas;
 	invitados: Invitado[];
 }
