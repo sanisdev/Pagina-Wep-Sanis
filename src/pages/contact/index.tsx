@@ -10,29 +10,6 @@ const Contact = () => {
 	const [fromEmail, setFromEmail] = useState("");
 	const [message, setMessage] = useState("");
 	const [responseMessage, setResponseMessage] = useState("");
-	// const form = useRef<HTMLFormElement>(null);
-
-	// const sendEmail = (e: React.FormEvent) => {
-	//   e.preventDefault();
-
-	//   if (form.current) {
-	//     emailjs
-	//       .sendForm(
-	//         "YOUR_SERVICE_ID",
-	//         "YOUR_TEMPLATE_ID",
-	//         form.current,
-	//         "YOUR_PUBLIC_KEY"
-	//       )
-	//       .then(
-	//         () => {
-	//           console.log("SUCCESS!");
-	//         },
-	//         (error) => {
-	//           console.log("FAILED...", error.text);
-	//         }
-	//       );
-	//   }
-	// };
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -65,7 +42,7 @@ const Contact = () => {
 	};
 
 	return (
-		<div className="flex pt-16   justify-center">
+		<div className="flex justify-center">
 			<div className="flex flex-col space-y-10">
 				<div className="flex flex-col py-5 md:flex-row md:space-x-5 w-full space-y-5 md:space-y-0 sm:space-y-5">
 					<div className="flex flex-col space-y-10 md:space-y-0 md:flex-row md:space-x-10 md:align-middle md:justify-center md:items-center ">

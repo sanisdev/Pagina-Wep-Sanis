@@ -24,6 +24,7 @@ export default {
 				"pl-3": "url('./src/assets/palapas/PALAPA3/PALAPA3-1.svg')",
 				"pl-4": "url('./src/assets/palapas/PALAPA4/PALAPA4-1.svg')",
 				"pl-5": "url('./src/assets/palapas/PALAPA5/PALAPA5-1.svg')",
+				"pl-ca": "url('./src/assets/palapas/CAPRICHO/1.svg')",
 				"pl-6": "url('./src/assets/palapas/PALAPA6/PALAPA6-1.svg')",
 				"pl-7": "url('./src/assets/palapas/PALAPA7/PALAPA7-1.svg')",
 				"pl-8": "url('./src/assets/palapas/PALAPA6/PALAPA6-1.svg')",

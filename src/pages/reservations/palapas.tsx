@@ -26,10 +26,10 @@ const Palapas = () => {
 			Constants.palapa1_5,
 		],
 		[
-			Constants.palapa1,
-			Constants.palapa1_2,
-			Constants.palapa1_4,
-			Constants.palapa1_5,
+			Constants.palapa2,
+			Constants.palapa2_2,
+			Constants.palapa2_3,
+			Constants.palapa2_4,
 		],
 		[
 			Constants.palapa3,
@@ -50,10 +50,10 @@ const Palapas = () => {
 			Constants.palapa1_5,
 		],
 		[
-			Constants.palapa1,
-			Constants.palapa1_2,
-			Constants.palapa1_4,
-			Constants.palapa1_5,
+			Constants.palapaCA,
+			Constants.palapaCA_2,
+			Constants.palapaCA_3,
+			Constants.palapaCA_4,
 		],
 		[
 			Constants.palapa6,
@@ -62,10 +62,10 @@ const Palapas = () => {
 			Constants.palapa6_4,
 		],
 		[
-			Constants.palapa1,
-			Constants.palapa1_2,
-			Constants.palapa1_4,
-			Constants.palapa1_5,
+			Constants.palapa7,
+			Constants.palapa7_2,
+			Constants.palapa7_3,
+			Constants.palapa7_4,
 		],
 	];
 	const icon = <i className="pi pi-eye"></i>;
@@ -166,7 +166,7 @@ const Palapas = () => {
 					</div>
 					<div
 						key={6}
-						className={`bg-cover bg-pl-6 bg-center h-60 w-72 flex items-center justify-center cursor-pointer border-2 shadow-2xl rounded-lg
+						className={`bg-cover bg-pl-ca bg-center h-60 w-72 flex items-center justify-center cursor-pointer border-2 shadow-2xl rounded-lg
 						transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300`}
 						onClick={() => handleImageClick(6)}
 					>

@@ -8,7 +8,7 @@ import {
 	LoginResponse,
 } from "../interfaces/interfaces";
 
-const API_BASE_URL = "http://3.17.189.153:3001";
+const API_BASE_URL = "https://api.sanis.mx";
 
 const api = axios.create({
 	baseURL: API_BASE_URL,

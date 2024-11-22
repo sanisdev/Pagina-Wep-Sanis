@@ -5,11 +5,11 @@ import { Password } from "primereact/password";
 import { Toast } from "primereact/toast";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { changePassword } from "../../services/api";
+import { changePassword } from "../services/api";
 import axios, { AxiosError } from "axios";
 type ToastSeverity = "success" | "info" | "warn" | "error";
 
-const ResetPassword  = () => {
+const ChangeInitialPassword  = () => {
     
 	const [numero_accion, setNumeroAccion] = useState<number>(0);
 	const [contrasena, setPassword] = useState<string>("");
@@ -142,4 +142,4 @@ const ResetPassword  = () => {
 };
 
  
-export default ResetPassword  ;
+export default ChangeInitialPassword  ;

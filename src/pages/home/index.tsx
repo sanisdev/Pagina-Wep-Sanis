@@ -66,8 +66,8 @@ const Home = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col  space-y-10">
-			<div className=" relative w-full  py-5 ">
+		<div className="flex flex-col  space-y-10 pt-14 md:pt-0">
+			<div className=" relative w-full  ">
 				<div className="z-0 h-72 md:h-[10%] ">
 					
 					<video
@@ -181,19 +181,8 @@ const Home = () => {
 				</div>
 			</div>
 
-			<h1 className="text-black px-5">Próximos Eventos</h1>
+			<h1 className="text-black px-5 text-4xl">Próximos Eventos</h1>
 			<div className="card">
-				{/* <Carousel
-					autoplayInterval={1000}
-					value={eventos}
-					numVisible={3}
-					numScroll={3}
-					responsiveOptions={responsiveOptions}
-					itemTemplate={itemTemplate}
-					prevIcon="pi pi-chevron-left text-4xl  text-[#000717] "
-					nextIcon="pi pi-chevron-right text-4xl text-[#000717]"
-				/> */}
-
 				<ResponsiveCarousel eventos={evento} home={true} />
 			</div>
 		</div>

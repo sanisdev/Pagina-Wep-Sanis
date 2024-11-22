@@ -3,16 +3,17 @@ export interface LoginResponse {
 	message: string;
 	result: {
 		token: string | undefined;
-		response:Response| undefined;
-		primerInicioSesion:boolean | undefined;
+		response: Response | undefined;
+		primerInicioSesion: boolean | undefined;
+		reservacionPendiente: boolean | undefined;
 	}; // o lo que tu API devuelva en la respuesta
 }
 export interface Response {
 	statusCode: number | undefined;
 	error: string | undefined;
 	menssage: string;
-	
-	role:string | undefined;
+
+	role: string | undefined;
 }
 
 export interface LoginData {
@@ -61,23 +62,24 @@ export interface FechasResponse {
 export interface JwtPayload {
 	numero_accion: number; // Asegúrate de usar el tipo adecuado
 	role: string;
+	exp: number; // Expiración del token en formato UNIX
 }
 
 // Interfaz para el usuario
-interface Usuario {
+export interface Usuario {
+	numero_accion: number;
 	nombre: string;
-	correo:string;
-	telefono:string;
+	correo: string;
+	telefono: string;
+	
 }
 
 export interface InvitadoResponse extends Invitado {
-	id: number;
-	reservacion_id: number;
-	check_in: boolean;
+	reservacion_id?: number;
 }
 
 export interface Invitado {
-	id:number;
+	id: number | null;
 	nombre: string;
 	check_in: boolean;
 	numero_pulsera: number | undefined;
@@ -95,7 +97,6 @@ export interface Reservacion {
 	numero_manteles: number; // Número de manteles
 	color_manteles: string; // Color de los manteles
 	notas: string; // Notas adicionales
-	tipo_mesa: string; // Tipo de mesa (ej. "estándar")
 	invitados: Invitado[]; // Lista de invitados
 	estatus: string; // Lista de invitados
 }
@@ -106,7 +107,7 @@ export interface EventosDelDiaResponse {
 }
 
 export interface ReservacionResponse {
-	id:number
+	id: number;
 	usuario_id: number; // ID del usuario que realiza la reservación
 	palapa_id: number; // ID de la palapa
 	fecha: string; // Fecha en formato ISO (ej. "2024-10-15T14:00:00Z")
@@ -116,33 +117,82 @@ export interface ReservacionResponse {
 	numero_manteles: number; // Número de manteles
 	color_manteles: string; // Color de los manteles
 	notas: string; // Notas adicionales
-	tipo_mesa: string; // Tipo de mesa (ej. "estándar")
+	estatus: string;
 	usuario: Usuario | null;
 	invitados: InvitadoResponse[]; // Lista de invitados
-	estatus: string; // Lista de invitados
 	palapa: Palapas;
-	adeudos: Adeudo[];
+	tablon:boolean;
 }
 
-export interface Adeudo {
-	id: number;
-	descripcion: string;
-	monto: number;
-	estatus: string;
-	fecha: string;
-}
 
-// Interfaz para la Multa
-export interface Multa {
-	id: number; // ID de la multa
-	usuario: Usuario; // Relación con el usuario
-	usuario_id: number; // ID del usuario
-	descripcion: string; // Descripción de la multa
-	coste: number; // Coste de la multa
-	fecha: string; // Fecha de la multa en formato ISO
-}
 
 export interface Palapas {
 	id: number;
 	nombre: string;
 }
+
+export interface UpdateInvitadosBatchDto {
+	invitados: Invitado[];
+}
+
+// Interfaz para cada reservación del día
+export interface ResponseReservacionDia {
+	id: number;
+	palapa: Palapas;
+	invitados: Invitado[];
+}
+
+export interface UpdateReservacion {
+	fecha: string; // Fecha en formato ISO (ej. "2024-10-15T14:00:00Z")
+	numero_mesas: number; // Número de mesas
+	numero_manteles: number; // Número de manteles
+	color_manteles: string; // Color de los manteles
+	notas: string; // Notas adicionales
+	estatus: string;
+	invitados: InvitadoResponse[]; // Lista de invitados
+	tablon:boolean;
+ }
+
+ export interface RegisterUserData {
+	numero_accion: number;
+	nombre: string;
+	correo: string;
+	contrasena: string;
+	role?: string;
+	telefono: string;
+  }
+  
+  export interface RegisterResponse {
+	status: string;
+	message: string;
+	result: any;
+  }
+  
+  export interface SearchResponse<T> {
+    results: T[];
+    total: number;
+    page: number;
+    pageSize: number;
+}
+
+export interface CreateUserDto {
+    numero_accion: number;
+    nombre: string;
+    correo: string;
+    // contrasena: string;
+    telefono: string;
+}
+
+export interface RequestPasswordResetData {
+	email: string;
+}
+
+export interface PasswordResetResponse {
+	status: string;
+	message: string;
+}
+
+export interface ResetPasswordDto {
+	token: string;
+	newPassword: string;
+  }

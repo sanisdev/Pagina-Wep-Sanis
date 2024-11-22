@@ -1578,6 +1578,7 @@ const ReservacionForm: React.FC = () => {
 								className=""
 								onClick={addReservation}
 							/>
+							
 						</div>
 					</div>
 				</Card>

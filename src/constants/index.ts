@@ -33,6 +33,9 @@ import PALAPA1_5svg from "../assets/palapas/PALAPA1/PALAPA1-6.svg";
 
 //Palapa 2
 import PALAPA2 from "../assets/palapas/PALAPA2/PALAPA2-1.svg";
+import PALAPA2_2 from "../assets/palapas/PALAPA2/PALAPA2-2.svg";
+import PALAPA2_3 from "../assets/palapas/PALAPA2/PALAPA2-3.svg";
+import PALAPA2_4 from "../assets/palapas/PALAPA2/PALAPA2-4.svg";
 //Palapa 3
 import PALAPA3 from "../assets/palapas/PALAPA3/PALAPA3-1.svg";
 import PALAPA3_2 from "../assets/palapas/PALAPA3/PALAPA3-2.svg";
@@ -45,6 +48,12 @@ import PALAPA4_2 from "../assets/palapas/PALAPA4/PALAPA4-2.svg";
 import PALAPA4_3 from "../assets/palapas/PALAPA4/PALAPA4-3.svg";
 import PALAPA4_4 from "../assets/palapas/PALAPA4/PALAPA4-4.svg";
 
+//PALAPA CAPRICHO
+import CAPRICHO from "../assets/palapas/CAPRICHO/1.svg";
+import CAPRICHO_2 from "../assets/palapas/CAPRICHO/2.svg";
+import CAPRICHO_3 from "../assets/palapas/CAPRICHO/3.svg";
+import CAPRICHO_4 from "../assets/palapas/CAPRICHO/4.svg";
+
 
 
 import PALAPA5 from "../assets/palapas/PALAPA5/PALAPA5-1.svg";
@@ -54,6 +63,11 @@ import PALAPA6 from "../assets/palapas/PALAPA6/PALAPA6-1.svg";
 import PALAPA6_2 from "../assets/palapas/PALAPA6/PALAPA6-2.svg";
 import PALAPA6_3 from "../assets/palapas/PALAPA6/PALAPA6-3.svg";
 import PALAPA6_4 from "../assets/palapas/PALAPA6/PALAPA6-4.svg";
+//PALAPA 6
+import PALAPA7 from "../assets/palapas/PALAPA7/PALAPA7-1.svg";
+import PALAPA7_2 from "../assets/palapas/PALAPA7/2.svg";
+import PALAPA7_3 from "../assets/palapas/PALAPA7/3.svg";
+import PALAPA7_4 from "../assets/palapas/PALAPA7/4.svg";
 
 //Manteles
 import MANTEL1 from "../assets/reservaciones/CHOCOLATE.svg";
@@ -94,6 +108,9 @@ export const palapa1_5: string = PALAPA1_5svg;
 
 
 export const palapa2: string = PALAPA2;
+export const palapa2_2: string = PALAPA2_2;
+export const palapa2_3: string = PALAPA2_3;
+export const palapa2_4: string = PALAPA2_4;
 //Palapa 3
 export const palapa3: string = PALAPA3;
 export const palapa3_2: string = PALAPA3_2;
@@ -109,11 +126,24 @@ export const palapa4_4: string = PALAPA4_4;
 
 export const palapa5: string = PALAPA5;
 
+//Palapa Capricho
+export const palapaCA: string = CAPRICHO;
+export const palapaCA_2: string = CAPRICHO_2;
+export const palapaCA_3: string = CAPRICHO_3;
+export const palapaCA_4: string = CAPRICHO_4;
+
 //Palapa 6
 export const palapa6: string = PALAPA6;
 export const palapa6_2: string = PALAPA6_2;
 export const palapa6_3: string = PALAPA6_3;
 export const palapa6_4: string = PALAPA6_4;
+
+//Palapa 7
+//Palapa 6
+export const palapa7: string = PALAPA7;
+export const palapa7_2: string = PALAPA7_2;
+export const palapa7_3: string = PALAPA7_3;
+export const palapa7_4: string = PALAPA7_4;
 
 export const mantel1:string = MANTEL1;
 export const mantel2:string = MANTEL2;

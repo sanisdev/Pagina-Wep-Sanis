@@ -39,7 +39,7 @@ const Ads = () => {
 
 	return (
 		<div
-			className="flex flex-col pb-5 pt-16 space-y-5 align-middle justify-center items-center"
+			className="flex flex-col pb-5 pt-2 space-y-5 align-middle justify-center items-center"
 			aria-live="polite"
 		>
 			{loading ? (

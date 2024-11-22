@@ -250,19 +250,19 @@ const Adeudos: FC<AdeudosProps> = () => {
 	// 	});
 	// };
 
-	const getReservaciones = async () => {
-		try {
-			const respuesta = await obtenerEventosPorId(); // Llamada a la API
+	// const getReservaciones = async () => {
+	// 	try {
+	// 		const respuesta = await obtenerEventosPorId(); // Llamada a la API
 
-			setReservaciones(respuesta);
-		} catch (error) {
-			console.error("Error al obtener las fechas no disponibles:", error);
-		}
-	};
+	// 		setReservaciones(respuesta);
+	// 	} catch (error) {
+	// 		console.error("Error al obtener las fechas no disponibles:", error);
+	// 	}
+	// };
 
-	useEffect(() => {
-		getReservaciones();
-	}, []);
+	// useEffect(() => {
+	// 	getReservaciones();
+	// }, []);
 
 	// const cancelarReservacion = (adeudo: ReservacionResponse) => {
 	// 	if (
@@ -407,7 +407,7 @@ const Adeudos: FC<AdeudosProps> = () => {
 				<div className="flex flex-col justify-between min-h-[70vh] ">
 					<div>
 						<h2 className="text-2xl md:text-4xl font-bold mb-2 ">
-							Cargos y Reservaciones
+							 Reservaciones Pendientes
 						</h2>
 						<p className="text-gray-600 mb-6 text-sm md:text-base max-w-">
 							Revise sus reservaciones de palapas y los cargos
@@ -484,7 +484,7 @@ const Adeudos: FC<AdeudosProps> = () => {
 							</tbody>
 						</table>
 
-						<h2 className="text-2xl md:text45xl font-bold mb-2">
+						{/* <h2 className="text-2xl md:text45xl font-bold mb-2">
 							Cargos (Pendientes)
 						</h2>
 						<table className="w-full text-left mb-6 ">
@@ -558,7 +558,7 @@ const Adeudos: FC<AdeudosProps> = () => {
 																				className="rounded-l-none"
 																			/>
 																		</div>
-																	</td> */}
+																	</td> 
 																</tr>
 															)
 													  )
@@ -585,11 +585,11 @@ const Adeudos: FC<AdeudosProps> = () => {
 									</tr>
 								)}
 							</tbody>
-						</table>
+						</table> */}
 
 						{/* Segunda tabla para otros cargos (multas) */}
 
-						<h2 className="text-2xl md:text45xl font-bold mb-2">
+						{/* <h2 className="text-2xl md:text45xl font-bold mb-2">
 							Otros Cargos (Multas)
 						</h2>
 						<table className="w-full text-left mb-6">
@@ -617,16 +617,16 @@ const Adeudos: FC<AdeudosProps> = () => {
 										</td>
 									</tr>
 								))}
-							</tbody> */}
-						</table>
+							</tbody> *
+						</table> */}
 					</div>
 
-					<div className="flex justify-between items-center">
+					{/* <div className="flex justify-between items-center">
 						{/*
 						//!Ya con datos 
 						<p className="font-bold text-base md:text-lg">
 							Total a pagar: <span>${totalPagar.toFixed(2)}</span>
-						</p> */}
+						</p> 
 						<p className="font-bold text-base md:text-lg">
 							Total a pagar: <span>${1000}</span>
 						</p>
@@ -637,7 +637,7 @@ const Adeudos: FC<AdeudosProps> = () => {
 						>
 							Aceptar Cargos
 						</button>
-					</div>
+					</div> */}
 				</div>
 			</Card>
 			{/* Sidebar para editar reservación */}

@@ -13,7 +13,6 @@ import "../css/Menubar.css";
 
 const Navbar = () => {
 	const Navigate = useNavigate();
-	
 
 	const start = (
 		<img
@@ -118,8 +117,8 @@ const Navbar = () => {
 						/>
 					),
 					className: "bg-slate-100 md:bg-white",
-					// command: () => Navigate(`/Login/${false}` )
-					command: () => Navigate("Tournaments"),
+					command: () => Navigate(`/Login/${false}`),
+					// command: () => Navigate("Tournaments"),
 				},
 				// {
 				// 	label: "Salones",
@@ -205,9 +204,23 @@ const Navbar = () => {
 					// 	/>
 					// ),
 					className: "bg-slate-100 md:bg-white",
-					command: () => Navigate("Tournaments"),
-					// command: () => Navigate(`/Login/${true}` )
-					
+					// command: () => Navigate("Tournaments"),
+					command: () => Navigate(`/Login/${true}`),
+				},
+				{
+					label: "Detalles",
+					icon: "pi pi-wallet",
+					// (
+					// 	<IconSvg
+					// 		src={SvgIcon2}
+					// 		alt="Salones"
+					// 		ancho="1.5rem"
+					// 		largo="1.5rem"
+					// 	/>
+					// ),
+					className: "bg-slate-100 md:bg-white",
+					// command: () => Navigate("Tournaments"),
+					command: () => Navigate(`/resumenReservacion`),
 				},
 			],
 		},
@@ -262,50 +275,46 @@ const Navbar = () => {
 					command: handleDownloadReglamento,
 				},
 				{
-					label:"Trabajadores",
+					label: "Trabajadores",
+					icon: "pi pi-user",
+					className: "bg-slate-100",
+					command: () => Navigate("LoginComunicacion"),
+				},
+				{
+					label: "Actividades",
+					icon: "pi pi-plus",
+					className: "bg-slate-100 ",
+					url: "https://shorturl.at/OYEDi",
+				},
+				{
+					label:"Lista de Invitados",
 					icon: "pi pi-user",
 					className:"bg-slate-100",
-					command:() => Navigate("LoginComunicacion")
-				},
-				// {
-				// 	label:"Lista de Invitados",
-				// 	icon: "pi pi-user",
-				// 	className:"bg-slate-100",
-				// 	command:() => Navigate("Invitados")
-				// }
+					command:() => Navigate("AccountAdmin")
+				}
 			],
 		},
 	];
 
 	return (
-		<div
-			className="fixed w-full top-0 left-0 z-50 bg-[#000717] "
-			style={{
-				display: "flex",
-				justifyContent: "center",
-			}}
-		>
-			<div className="absolute inset-0 bg-cover bg-center w-full"></div>
-			<div className="relative z-10 w-full ">
-				<Menubar
-					// className=" w-full"
-					model={items}
-					start={start}
-					end={end}
-					style={{
-						display: "flex",
-						justifyContent: "center",
-						// backgroundImage: `url(${backgroundImage})`,
-						backgroundSize: "cover",
-						backgroundPosition: "center",
-						backgroundColor: "rgba(255, 255, 255, 0.8)",
-						backdropFilter: "blur(10px)",
-					}}
-					menuIcon={
-						<i className="pi pi-align-justify custom-menu-icon" />
-					}
-				/>
-			</div>
+		<div className="fixed  z-50 md:relative md:z-10 w-full bg-cover bg-center bg-[#000717] ">
+			<Menubar
+				model={items}
+				start={start}
+				end={end}
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					backgroundSize: "cover",
+					backgroundPosition: "center",
+					backgroundColor: "rgba(255, 255, 255, 0.8)",
+					backdropFilter: "blur(10px)",
+				}}
+				className="text-[#535bf2] "
+				menuIcon={
+					<i className="pi pi-align-justify custom-menu-icon" />
+				}
+			/>
 		</div>
 	);
 };
