@@ -18,8 +18,32 @@ import { Image } from "primereact/image";
 import * as Constants from "../../constants";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { usePalapaContext } from "../../context/PalapaContext";
+import { Nullable } from "primereact/ts-helpers";
+import { addLocale } from "primereact/api";
 // import Calendar from "react-calendar";
 // import 'react-calendar/dist/Calendar.css';
+
+// Agregar configuración de idioma para español
+addLocale('es', {
+    firstDayOfWeek: 1,
+    dayNames: [
+        'domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'
+    ],
+    dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+    dayNamesMin: ['D', 'L', 'M', 'Mi', 'J', 'V', 'S'],
+    monthNames: [
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ],
+    monthNamesShort: [
+        'ene', 'feb', 'mar', 'abr', 'may', 'jun',
+        'jul', 'ago', 'sep', 'oct', 'nov', 'dic'
+    ],
+    today: 'Hoy',
+    clear: 'Limpiar',
+    dateFormat: 'dd/mm/yy',
+    weekHeader: 'Sem'
+});
 
 const ReservacionForm: React.FC = () => {
 	const { selectedPalapa } = usePalapaContext(); // Accede al ID desde el contexto
@@ -30,6 +54,7 @@ const ReservacionForm: React.FC = () => {
 	const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 	const [disabledDates, setDisabledDates] = useState<Date[]>([]);
 	const colors: string[] = ["Negro", "Chocolate"];
+	const [time, setTime] = useState<Nullable<Date>>(null);
 	// Mapea el color seleccionado a la imagen correspondiente
 	const selectedMantel =
 		selectedColor === "Chocolate"
@@ -179,7 +204,7 @@ const ReservacionForm: React.FC = () => {
 
 	// Nueva función para agregar una reservación
 	const addReservation = async () => {
-		if (!selectedDate || !numTables || !numManteles) {
+		if (!selectedDate || !numTables || !numManteles || !time) {
 			// alert("Por favor completa todos los campos requeridos.");
 			showToast(
 				"warn",
@@ -193,7 +218,7 @@ const ReservacionForm: React.FC = () => {
 			usuario_id: Number(localStorage.getItem("userId")), // Cambia esto con el ID del usuario actual
 			palapa_id: parseInt(selectedPalapa!.toString()), // Asegúrate de que el ID de la palapa sea un número
 			fecha: selectedDate.toISOString(), // Fecha en formato ISO
-			hora_inicio: "14:00:00", // Cambia esto a la hora de inicio deseada
+			hora_inicio: time!.toISOString(), // Cambia esto a la hora de inicio deseada
 			hora_fin: "18:00:00", // Cambia esto a la hora de fin deseada
 			numero_mesas: numTables,
 			numero_manteles: numManteles,
@@ -251,6 +276,7 @@ const ReservacionForm: React.FC = () => {
 
 						<div className="flex flex-col md:flex-row md:justify-between items-center justify-center md:items-start gap-4">
 							<Calendar
+							locale="es" // Cambiar el idioma a español
 								value={selectedDate}
 								onChange={(e) => setSelectedDate(e.value!)}
 								inline
@@ -266,8 +292,30 @@ const ReservacionForm: React.FC = () => {
 
 							<div className="flex flex-col w-[100vw]  md:w-2/3 xl:w-1/2 p-2 pl-5 ">
 								<div className="flex flex-col  sm:flex-col md:flex-col lg:flex-row md:justify-between gap-2">
+									<div className="mb-4 flex flex-col ">
+										<label
+											htmlFor="calendar-timeonly"
+											className="font-bold block mb-2"
+										>
+											Hora de Inicio
+										</label>
+										<Calendar
+											value={time}
+											onChange={(e) => setTime(e.value)}
+											timeOnly
+											style={{ maxWidth: "250px" }} // Limita el ancho del input del calendario
+											panelStyle={{
+												maxWidth: "250px",
+												overflowX: "hidden",
+											}} // Ajusta el popup
+											 appendTo="self"
+										/>
+									</div>
 									<div className="mb-4 flex flex-col    ">
-										<label htmlFor="numTables">
+										<label
+											htmlFor="numTables"
+											className="font-bold block mb-2"
+										>
 											Número de mesas
 										</label>
 										<div className="">
@@ -287,7 +335,10 @@ const ReservacionForm: React.FC = () => {
 										</small>
 									</div>
 									<div className="mb-4 flex flex-col ">
-										<label htmlFor="numTables">
+										<label
+											htmlFor="numTables"
+											className="font-bold block mb-2"
+										>
 											Número de Manteles
 										</label>
 										<InputNumber
@@ -370,18 +421,18 @@ const ReservacionForm: React.FC = () => {
 												/>
 											</div>
 										</div>
-											{/* Label para mostrar la capacidad máxima */}
-									{selectedPalapa && (
-										<p className="text-gray-500 text-sm">
-											Capacidad máxima de invitados:{" "}
-											{
-												capacities[
-													selectedPalapa as keyof typeof capacities
-												]
-											}
-											.
-										</p>
-									)}
+										{/* Label para mostrar la capacidad máxima */}
+										{selectedPalapa && (
+											<p className="text-gray-500 text-sm">
+												Capacidad máxima de invitados:{" "}
+												{
+													capacities[
+														selectedPalapa as keyof typeof capacities
+													]
+												}
+												.
+											</p>
+										)}
 									</div>
 								</div>
 								<div className="flex flex-col">
@@ -408,7 +459,7 @@ const ReservacionForm: React.FC = () => {
 									htmlFor="calendar-timeonly"
 									className="font-bold block mb-2"
 								>
-									Notas Adicionales de la reservacion
+									Notas adicionales de la reservacion
 								</label>
 								<span className="p-float-label">
 									<InputTextarea
@@ -438,7 +489,6 @@ const ReservacionForm: React.FC = () => {
 										Cantidad de Invitados:{" "}
 										{guestList.length}
 									</label>
-								
 								</div>
 								<ScrollPanel
 									style={{ width: "100%", height: "200px" }}

@@ -54,9 +54,12 @@ import CAPRICHO_2 from "../assets/palapas/CAPRICHO/2.svg";
 import CAPRICHO_3 from "../assets/palapas/CAPRICHO/3.svg";
 import CAPRICHO_4 from "../assets/palapas/CAPRICHO/4.svg";
 
+//PALAPA SARAPERA
+import SARAPERA from "../assets/palapas/SARAPERA/1.svg";
+import SARAPERA_2 from "../assets/palapas/SARAPERA/2.svg";
+import SARAPERA_3 from "../assets/palapas/SARAPERA/3.svg";
+import SARAPERA_4 from "../assets/palapas/SARAPERA/4.svg";
 
-
-import PALAPA5 from "../assets/palapas/PALAPA5/PALAPA5-1.svg";
 
 //PALAPA 6
 import PALAPA6 from "../assets/palapas/PALAPA6/PALAPA6-1.svg";
@@ -124,13 +127,19 @@ export const palapa4_4: string = PALAPA4_4;
 
 
 
-export const palapa5: string = PALAPA5;
+//Palapa Capricho
+export const palapaSA: string = SARAPERA;
+export const palapaSA_2: string = SARAPERA_2;
+export const palapaSA_3: string = SARAPERA_3;
+export const palapaSA_4: string = SARAPERA_4;
 
 //Palapa Capricho
 export const palapaCA: string = CAPRICHO;
 export const palapaCA_2: string = CAPRICHO_2;
 export const palapaCA_3: string = CAPRICHO_3;
 export const palapaCA_4: string = CAPRICHO_4;
+
+
 
 //Palapa 6
 export const palapa6: string = PALAPA6;

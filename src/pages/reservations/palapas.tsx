@@ -45,10 +45,10 @@ const Palapas = () => {
 			Constants.palapa4_4,
 		],
 		[
-			Constants.palapa1,
-			Constants.palapa1_2,
-			Constants.palapa1_4,
-			Constants.palapa1_5,
+			Constants.palapaSA,
+			Constants.palapaSA_2,
+			Constants.palapaSA_3,
+			Constants.palapaSA_4,
 		],
 		[
 			Constants.palapaCA,
