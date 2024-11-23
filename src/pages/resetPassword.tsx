@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const ResetPassword = () => {
 	const [token, setToken] = useState("");
 	const [newPassword, setNewPassword] = useState("");
+	const [isLoading, setIsLoading] = useState(false); // Estado de carga
 	const toast = useRef<Toast>(null);
     const Navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const ResetPassword = () => {
 	}, []); // Solo se ejecuta una vez al montar el componente
 
 	const handleResetPassword = async () => {
+		setIsLoading(true); // Activa el estado de carga
 		try {
 			await resetPassword({ token, newPassword });
 			toast.current!.show({
@@ -42,11 +44,13 @@ const ResetPassword = () => {
 					error.response?.data?.message ||
 					"Error al restablecer la contraseña.",
 			});
-		}
+		}finally {
+            setIsLoading(false); // Desactiva el estado de carga
+        }
 	};
 
 	return (
-		<div className="flex justify-center align-middle items-center h-[85vh]">
+		<div className="flex justify-center align-middle items-center w-[100vw] md:w-auto h-[85vh]">
 			<Toast ref={toast} />
 			<Card>
 				<div className="flex flex-col gap-4">
@@ -55,7 +59,7 @@ const ResetPassword = () => {
 						placeholder="Token"
 						value={token}
 						onChange={(e) => setToken(e.target.value)}
-						className="w-[32rem] "
+						className="w-[80vw] "
 					/>
 					<div>
 						<Password
@@ -67,12 +71,16 @@ const ResetPassword = () => {
 					</div>
 
 					<div className="flex justify-center items-center">
-						<Button
-							className="w-80 justify-center items-center align-middle"
-							onClick={handleResetPassword}
-						>
-							Restablecer Contraseña
-						</Button>
+					<Button
+                            className="w-80 justify-center items-center align-middle"
+                            onClick={handleResetPassword}
+                            disabled={isLoading} // Deshabilita mientras carga
+                        >
+                            {isLoading ? (
+                                <i className="pi pi-spin pi-spinner mr-2"></i> // Spinner
+                            ) : null}
+                            Restablecer Contraseña
+                        </Button>
 					</div>
 				</div>
 			</Card>

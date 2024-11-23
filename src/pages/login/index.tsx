@@ -20,6 +20,9 @@ const LoginReservations = () => {
 	const toast = useRef<Toast>(null);
 	const [showDialog, setShowDialog] = useState(false);
 	const [email, setEmail] = useState("");
+	const [loadingAction, setLoadingAction] = useState<
+		null | "login" | "requestPasswordReset"
+	>(null);
 
 	// Variable estática que simula un token JWT
 	//Admin
@@ -35,7 +38,7 @@ const LoginReservations = () => {
 
 	const handleLogin = async (event: React.FormEvent) => {
 		event.preventDefault();
-
+		setLoadingAction("login"); // Marca la acción de login en curso
 		try {
 			const result = await login({
 				numero_accion,
@@ -128,6 +131,8 @@ const LoginReservations = () => {
 					"Por favor, contacte a soporte técnico."
 				);
 			}
+		} finally {
+			setLoadingAction(null); // Termina la acción
 		}
 	};
 
@@ -142,6 +147,7 @@ const LoginReservations = () => {
 	};
 
 	const handleRequestPasswordReset = async () => {
+		setLoadingAction("requestPasswordReset");
 		try {
 			await requestPasswordReset({ email });
 			setShowDialog(false); // Cierra el diálogo
@@ -154,6 +160,8 @@ const LoginReservations = () => {
 					error.response?.data?.message ||
 					"Error al enviar el correo.",
 			});
+		} finally {
+			setLoadingAction(null); // Termina la acción
 		}
 	};
 
@@ -182,8 +190,12 @@ const LoginReservations = () => {
 					<Button
 						className="w-full text-center justify-center"
 						onClick={handleLogin}
+						disabled={loadingAction === "login"}
 					>
-						Iniciar Sesión
+						{loadingAction === "login" && (
+							<i className="pi pi-spin pi-spinner mr-2"></i>
+						)}
+						Iniciar Sesion
 					</Button>
 					<span
 						className="w-full text-center justify-center text-blue-500 cursor-pointer"
@@ -212,7 +224,11 @@ const LoginReservations = () => {
 					<Button
 						className="w-full"
 						onClick={handleRequestPasswordReset}
+						disabled={loadingAction === "requestPasswordReset"}
 					>
+						{loadingAction === "requestPasswordReset" && (
+							<i className="pi pi-spin pi-spinner mr-2"></i>
+						)}
 						Enviar Correo
 					</Button>
 				</div>

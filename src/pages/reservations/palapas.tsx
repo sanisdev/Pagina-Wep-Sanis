@@ -105,7 +105,7 @@ const Palapas = () => {
 	];
 
 	return (
-		<div className="grid  mt-16 md:mt-0 justify-center w-full min-h-[100vh] md:min-h-[90vh] px-4 relative pt-10 md:pt-0">
+		<div className="grid  mt-16 md:mt-0 justify-center w-full min-h-[100vh] md:min-h-[85vh] px-4 relative pt-10 md:pt-0">
 			{selectedPalapa === null && (
 				<div className="grid grid-cols-1 sm:grid-cols-2 pt-6 md:grid-cols-4 gap-6 w-full justify-center align-middle">
 					<div
