@@ -11,11 +11,12 @@ import * as Constants from "../../constants";
 import { Image } from "primereact/image";
 
 import { Divider } from "primereact/divider";
+import { usePalapaContext } from "../../context/PalapaContext"; // Importa el contexto
 
 const Palapas = () => {
 	const navigate = useNavigate();
 	const [selectedDate] = useState<Date | null>(null);
-	const [selectedPalapa, setSelectedPalapa] = useState<number | null>(null);
+	const { selectedPalapa, setSelectedPalapa } = usePalapaContext(); // Usa el contexto
 	const [currentImage, setCurrentImage] = useState(0);
 
 	const images = [
@@ -83,9 +84,7 @@ const Palapas = () => {
 	};
 
 	const handleReserveClick = () => {
-		navigate(`/reservacion/${selectedPalapa}`, {
-			state: { fecha: selectedDate },
-		});
+		navigate(`/reservacion`); // Navega sin pasar el ID como parámetro
 	};
 	const lorem =
 		" Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, odit enim sunt animi quidem ab debitis id eveniet hic quaerat possimus at nisi nobis sequi, voluptates doloribus voluptatum doloremque soluta. Lorem Et id commodo ullamco est esse consectetur ipsum ad minim magna. Officia laborum sint laboris ex pariatur. Magna velit cupidatat laborum commodo laboris voluptate consectetur velit culpa.";
@@ -213,9 +212,9 @@ const Palapas = () => {
 							</div>
 						</div>
 
-						<h2 className="text-2xl font-bold text-center">
-							{palapasInfo[selectedPalapa - 1].name}
-						</h2>
+						<h2 className="text-2xl font-bold">
+              {palapasInfo.find((palapa) => palapa.id === selectedPalapa)?.name}
+            </h2>
 
 						<Button
 							label={

@@ -16,11 +16,13 @@ import { Checkbox } from "primereact/checkbox";
 type ToastSeverity = "success" | "info" | "warn" | "error";
 import { Image } from "primereact/image";
 import * as Constants from "../../constants";
+import { ScrollPanel } from "primereact/scrollpanel";
+import { usePalapaContext } from "../../context/PalapaContext";
 // import Calendar from "react-calendar";
 // import 'react-calendar/dist/Calendar.css';
 
 const ReservacionForm: React.FC = () => {
-	const { idPalapa } = useParams<{ idPalapa: string }>();
+	const { selectedPalapa } = usePalapaContext(); // Accede al ID desde el contexto
 	const [numTables, setNumTables] = useState<number | null>(null);
 	const [numManteles, setNumManteles] = useState<number | null>(null);
 	const [comments, setComments] = useState("");
@@ -36,6 +38,17 @@ const ReservacionForm: React.FC = () => {
 			? Constants.mantel2
 			: null;
 	const [tablon, setTablon] = useState<boolean>(false);
+	// Mapa de capacidades máximas por palapa
+	const capacities = {
+		1: 120,
+		2: 60,
+		3: 40,
+		4: 30,
+		5: 40,
+		6: 90,
+		7: 70,
+	} as const;
+
 	// const location = useLocation();
 	// const fecha = location.state?.fecha;
 	// Estado para la lista de invitados
@@ -53,33 +66,58 @@ const ReservacionForm: React.FC = () => {
 	// Obtener el año actual
 	const currentYear = new Date().getFullYear();
 	const currentMonth = new Date().getMonth();
-  
-	// Determinar los límites dinámicamente
-	const minDate = currentMonth >= 11 // Noviembre es 10, Diciembre es 11
-    ? new Date(currentYear, 11, 15) // 15 de diciembre del año actual
-    : new Date(currentYear, 0, 1); // 1 de enero del año actual
 
-  const maxDate = currentMonth >= 11
-    ? new Date(currentYear + 1, 11, 31) // 31 de diciembre del próximo año
-    : new Date(currentYear, 11, 31); // 31 de diciembre del año actual
+	// Determinar los límites dinámicamente
+	const minDate =
+		currentMonth >= 11 // Noviembre es 10, Diciembre es 11
+			? new Date(currentYear, 11, 15) // 15 de diciembre del año actual
+			: new Date(currentYear, 0, 1); // 1 de enero del año actual
+
+	const maxDate =
+		currentMonth >= 11
+			? new Date(currentYear + 1, 11, 31) // 31 de diciembre del próximo año
+			: new Date(currentYear, 11, 31); // 31 de diciembre del año actual
 
 	// Función para manejar el agregado de un nuevo invitado
 	const addGuest = () => {
-		if (newGuest && !guestList.includes(newGuest)) {
-			setGuestList([...guestList, newGuest]);
+		if (!selectedPalapa) {
+			alert("No hay ninguna palapa seleccionada.");
+			return;
+		}
+
+		const maxCapacity =
+			capacities[selectedPalapa as keyof typeof capacities] || 0;
+
+		if (guestList.length >= maxCapacity) {
+			alert(
+				`El límite de invitados para la Palapa ${selectedPalapa} es de ${maxCapacity}.`
+			);
+			return;
+		}
+
+		if (
+			newGuest.nombre &&
+			!guestList.some((guest) => guest.nombre === newGuest.nombre)
+		) {
+			setGuestList([
+				...guestList,
+				{ ...newGuest, id: guestList.length + 1 },
+			]);
 			setNewGuest({
-				id: 0, // o puedes dejarlo sin definir si lo generas en otro lugar
+				id: 0,
 				nombre: "",
 				check_in: false,
 				numero_pulsera: 0,
 				pulsera_devuelta: false,
-			}); // Limpiar el campo de entrada y resetear todos los valores
+			});
+		} else {
+			alert("El invitado ya está en la lista o el nombre está vacío.");
 		}
 	};
 
 	const getFechas = async () => {
 		try {
-			const respuesta = await obtenerFechas(Number(idPalapa)); // Llamada a la API
+			const respuesta = await obtenerFechas(Number(selectedPalapa)); // Llamada a la API
 			const fechas = respuesta.result;
 
 			// Valida que 'fechas' sea un array antes de aplicar map
@@ -153,7 +191,7 @@ const ReservacionForm: React.FC = () => {
 
 		const reservationData = {
 			usuario_id: Number(localStorage.getItem("userId")), // Cambia esto con el ID del usuario actual
-			palapa_id: parseInt(idPalapa!), // Asegúrate de que el ID de la palapa sea un número
+			palapa_id: parseInt(selectedPalapa!.toString()), // Asegúrate de que el ID de la palapa sea un número
 			fecha: selectedDate.toISOString(), // Fecha en formato ISO
 			hora_inicio: "14:00:00", // Cambia esto a la hora de inicio deseada
 			hora_fin: "18:00:00", // Cambia esto a la hora de fin deseada
@@ -311,8 +349,11 @@ const ReservacionForm: React.FC = () => {
 													}
 													onKeyPress={(e) => {
 														// Solo permite letras (A-Z, a-z) y espacios
-														const regex = /^[a-zA-Z\s]*$/;
-														if (!regex.test(e.key)) {
+														const regex =
+															/^[a-zA-Z\s]*$/;
+														if (
+															!regex.test(e.key)
+														) {
 															e.preventDefault(); // Evita que se escriban caracteres no válidos
 														}
 													}}
@@ -322,11 +363,25 @@ const ReservacionForm: React.FC = () => {
 													icon="pi pi-plus"
 													className="rounded-l-none"
 													severity="info"
-													disabled={!newGuest.nombre.trim()} // Desactiva si está vacío o solo tiene espacios
+													disabled={
+														!newGuest.nombre.trim()
+													} // Desactiva si está vacío o solo tiene espacios
 													onClick={addGuest}
 												/>
 											</div>
 										</div>
+											{/* Label para mostrar la capacidad máxima */}
+									{selectedPalapa && (
+										<p className="text-gray-500 text-sm">
+											Capacidad máxima de invitados:{" "}
+											{
+												capacities[
+													selectedPalapa as keyof typeof capacities
+												]
+											}
+											.
+										</p>
+									)}
 									</div>
 								</div>
 								<div className="flex flex-col">
@@ -362,14 +417,14 @@ const ReservacionForm: React.FC = () => {
 											setComments(e.target.value)
 										}
 										rows={5}
-										className="w-[100%] "
+										className="w-[100%] max-h-80"
 										placeholder="Notas"
 									/>
 								</span>
 							</div>
 							<ResponsiveDivider></ResponsiveDivider>
 							<div className="mb-4 flex flex-col ">
-								<div className="flex flex-row gap-2">
+								<div className="flex flex-row gap-2 ">
 									<label
 										htmlFor="guestList"
 										className="font-bold"
@@ -383,24 +438,29 @@ const ReservacionForm: React.FC = () => {
 										Cantidad de Invitados:{" "}
 										{guestList.length}
 									</label>
+								
 								</div>
-								<ul className="list-none max-h-64 overflow-y-auto overflow-x-auto ">
-									{guestList.map((guest, index) => (
-										<li
-											key={index}
-											className="mb-1 flex gap-4 items-center py-2 border-b-2"
-										>
-											<Button
-												icon="pi pi-times"
-												className="p-button-danger p-button-text h-8 w-8 justify-center"
-												onClick={() =>
-													removeGuest(index)
-												}
-											/>
-											<span>{guest.nombre}</span>
-										</li>
-									))}
-								</ul>
+								<ScrollPanel
+									style={{ width: "100%", height: "200px" }}
+								>
+									<ul className="list-none max-h-64 overflow-y-auto overflow-x-auto ">
+										{guestList.map((guest, index) => (
+											<li
+												key={index}
+												className="mb-1 flex gap-4 items-center py-2 border-b-2"
+											>
+												<Button
+													icon="pi pi-times"
+													className="p-button-danger p-button-text h-8 w-8 justify-center"
+													onClick={() =>
+														removeGuest(index)
+													}
+												/>
+												<span>{guest.nombre}</span>
+											</li>
+										))}
+									</ul>
+								</ScrollPanel>
 							</div>
 						</div>
 

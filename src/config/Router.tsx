@@ -31,6 +31,7 @@ const ChangeInitialPassword = lazy(() => import("../pages/changeInitialPassword"
 const ResumenReservacion = lazy(() => import("../pages/detallesReservacion"));
 const AccountAdmin= lazy(() => import("../pages/accountAdmin"));
 const ResetPassword= lazy(() => import("../pages/resetPassword"));
+import { PalapaProvider } from "../context/PalapaContext"; // Importa el proveedor
 
 interface PrivateRouteProps {
 	children: ReactNode;
@@ -66,14 +67,28 @@ const Layout = () => {
 							path="/LoginComunicacion"
 							element={<LoginComunicacion />}
 						/>
-						<Route path="/Palapas" element={<Palapas />} />
+							{/* Envolvemos las rutas relacionadas con Palapas en el contexto local */}
+							<Route
+							path="/Palapas"
+							element={
+								<PalapaProvider>
+									<Palapas />
+								</PalapaProvider>
+							}
+						/>
+						<Route
+							path="/reservacion"
+							element={
+								<PalapaProvider>
+									<Reservacion />
+								</PalapaProvider>
+							}
+						/>
+						
 						<Route path="/Salones" element={<Salones />} />
 						<Route path="/Login/:isAdeudo" element={<Login />} />
 						<Route path="/index" element={<Index />} />
-						<Route
-							path="/reservacion/:idPalapa"
-							element={<Reservacion />}
-						/>
+						
 						<Route
 							path="/PanelResevaciones"
 							element={<PanelReservations />}
