@@ -25,51 +25,53 @@ import FPTENIS from "../assets/ads/FPTENIS.svg";
 
 import MAPA from "../assets/palapas/Mapa.png";
 
+
+
 //Palapa 1
-import PALAPA1 from "../assets/palapas/PALAPA1/PALAPA1-1.webp";
-import PALAPA1_2svg from "../assets/palapas/PALAPA1/PALAPA1-2.webp";
-import PALAPA1_4svg from "../assets/palapas/PALAPA1/PALAPA1-5.webp";
-import PALAPA1_5svg from "../assets/palapas/PALAPA1/PALAPA1-6.webp";
+import PALAPA1 from "/assets/palapas/PALAPA1/PALAPA1-1.webp";
+import PALAPA1_2svg from "/assets/palapas/PALAPA1/PALAPA1-2.webp";
+import PALAPA1_4svg from "/assets/palapas/PALAPA1/PALAPA1-5.webp";
+import PALAPA1_5svg from "/assets/palapas/PALAPA1/PALAPA1-6.webp";
 
 //Palapa 2
-import PALAPA2 from "../assets/palapas/PALAPA2/PALAPA2-1.webp";
-import PALAPA2_2 from "../assets/palapas/PALAPA2/PALAPA2-2.webp";
-import PALAPA2_3 from "../assets/palapas/PALAPA2/PALAPA2-3.webp";
-import PALAPA2_4 from "../assets/palapas/PALAPA2/PALAPA2-4.webp";
+import PALAPA2 from "/assets/palapas/PALAPA2/PALAPA2-1.webp";
+import PALAPA2_2 from "/assets/palapas/PALAPA2/PALAPA2-2.webp";
+import PALAPA2_3 from "/assets/palapas/PALAPA2/PALAPA2-3.webp";
+import PALAPA2_4 from "/assets/palapas/PALAPA2/PALAPA2-4.webp";
 //Palapa 3
-import PALAPA3 from "../assets/palapas/PALAPA3/PALAPA3-1.webp";
-import PALAPA3_2 from "../assets/palapas/PALAPA3/PALAPA3-2.webp";
-import PALAPA3_3 from "../assets/palapas/PALAPA3/PALAPA3-3.webp";
-import PALAPA3_4 from "../assets/palapas/PALAPA3/PALAPA3-4.webp";
+import PALAPA3 from "/assets/palapas/PALAPA3/PALAPA3-1.webp";
+import PALAPA3_2 from "/assets/palapas/PALAPA3/PALAPA3-2.webp";
+import PALAPA3_3 from "/assets/palapas/PALAPA3/PALAPA3-3.webp";
+import PALAPA3_4 from "/assets/palapas/PALAPA3/PALAPA3-4.webp";
 
 //PALAPA 4
-import PALAPA4 from "../assets/palapas/PALAPA4/PALAPA4-1.webp";
-import PALAPA4_2 from "../assets/palapas/PALAPA4/PALAPA4-2.webp";
-import PALAPA4_3 from "../assets/palapas/PALAPA4/PALAPA4-3.webp";
-import PALAPA4_4 from "../assets/palapas/PALAPA4/PALAPA4-4.webp";
+import PALAPA4 from "/assets/palapas/PALAPA4/PALAPA4-1.webp";
+import PALAPA4_2 from "/assets/palapas/PALAPA4/PALAPA4-2.webp";
+import PALAPA4_3 from "/assets/palapas/PALAPA4/PALAPA4-3.webp";
+import PALAPA4_4 from "/assets/palapas/PALAPA4/PALAPA4-4.webp";
 
 //PALAPA SARAPERA
-import SARAPERA from "../assets/palapas/SARAPERA/1.webp";
-import SARAPERA_2 from "../assets/palapas/SARAPERA/2.webp";
-import SARAPERA_3 from "../assets/palapas/SARAPERA/3.webp";
-import SARAPERA_4 from "../assets/palapas/SARAPERA/4.webp";
+import SARAPERA from "/assets/palapas/SARAPERA/1.webp";
+import SARAPERA_2 from "/assets/palapas/SARAPERA/2.webp";
+import SARAPERA_3 from "/assets/palapas/SARAPERA/3.webp";
+import SARAPERA_4 from "/assets/palapas/SARAPERA/4.webp";
 
 //PALAPA CAPRICHO
-import CAPRICHO from "../assets/palapas/CAPRICHO/1.webp";
-import CAPRICHO_2 from "../assets/palapas/CAPRICHO/2.webp";
-import CAPRICHO_3 from "../assets/palapas/CAPRICHO/3.webp";
-import CAPRICHO_4 from "../assets/palapas/CAPRICHO/4.webp";
+import CAPRICHO from "/assets/palapas/CAPRICHO/1.webp";
+import CAPRICHO_2 from "/assets/palapas/CAPRICHO/2.webp";
+import CAPRICHO_3 from "/assets/palapas/CAPRICHO/3.webp";
+import CAPRICHO_4 from "/assets/palapas/CAPRICHO/4.webp";
 
 //PALAPA 6
-import PALAPA6 from "../assets/palapas/PALAPA6/PALAPA6-1.webp";
-import PALAPA6_2 from "../assets/palapas/PALAPA6/PALAPA6-2.webp";
-import PALAPA6_3 from "../assets/palapas/PALAPA6/PALAPA6-3.webp";
-import PALAPA6_4 from "../assets/palapas/PALAPA6/PALAPA6-4.webp";
+import PALAPA6 from "/assets/palapas/PALAPA6/PALAPA6-1.webp";
+import PALAPA6_2 from "/assets/palapas/PALAPA6/PALAPA6-2.webp";
+import PALAPA6_3 from "/assets/palapas/PALAPA6/PALAPA6-3.webp";
+import PALAPA6_4 from "/assets/palapas/PALAPA6/PALAPA6-4.webp";
 //PALAPA 6
-import PALAPA7 from "../assets/palapas/PALAPA7/1.webp";
-import PALAPA7_2 from "../assets/palapas/PALAPA7/2.webp";
-import PALAPA7_3 from "../assets/palapas/PALAPA7/3.webp";
-import PALAPA7_4 from "../assets/palapas/PALAPA7/4.webp";
+import PALAPA7 from "/assets/palapas/PALAPA7/1.webp";
+import PALAPA7_2 from "/assets/palapas/PALAPA7/2.webp";
+import PALAPA7_3 from "/assets/palapas/PALAPA7/3.webp";
+import PALAPA7_4 from "/assets/palapas/PALAPA7/4.webp";
 
 //Manteles
 import MANTEL1 from "../assets/reservaciones/CHOCOLATE.svg";

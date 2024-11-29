@@ -12,7 +12,7 @@ const ResetPassword = () => {
 	const [newPassword, setNewPassword] = useState("");
 	const [isLoading, setIsLoading] = useState(false); // Estado de carga
 	const toast = useRef<Toast>(null);
-    const Navigate = useNavigate();
+	const Navigate = useNavigate();
 
 	// Mostrar el toast automáticamente al renderizar la pantalla
 	useEffect(() => {
@@ -31,11 +31,11 @@ const ResetPassword = () => {
 				severity: "success",
 				summary: "Éxito",
 				detail: "Contraseña restablecida correctamente.",
-            });
-            // Redirige al login después de 2 segundos
-            setTimeout(() => {
-                Navigate("/login");
-            }, 2000);
+			});
+			// Redirige al login después de 2 segundos
+			setTimeout(() => {
+				Navigate("/login");
+			}, 2000);
 		} catch (error: any) {
 			toast.current!.show({
 				severity: "error",
@@ -44,9 +44,9 @@ const ResetPassword = () => {
 					error.response?.data?.message ||
 					"Error al restablecer la contraseña.",
 			});
-		}finally {
-            setIsLoading(false); // Desactiva el estado de carga
-        }
+		} finally {
+			setIsLoading(false); // Desactiva el estado de carga
+		}
 	};
 
 	return (
@@ -54,13 +54,17 @@ const ResetPassword = () => {
 			<Toast ref={toast} />
 			<Card>
 				<div className="flex flex-col gap-4">
-					<h1>Restablecer Contraseña</h1>
-					<InputText
-						placeholder="Token"
-						value={token}
-						onChange={(e) => setToken(e.target.value)}
-						className="w-[80vw] "
-					/>
+					<h1 className=" text-2xl">Restablecer Contraseña</h1>
+					<div className="flex flex-col">
+						<label htmlFor="">Token</label>
+						<InputText
+							placeholder="Token"
+							value={token}
+							onChange={(e) => setToken(e.target.value)}
+							className=" xl:w-[30vw] 2xl:w-[40vw] "
+						/>
+					</div>
+
 					<div>
 						<Password
 							value={newPassword}
@@ -71,16 +75,16 @@ const ResetPassword = () => {
 					</div>
 
 					<div className="flex justify-center items-center">
-					<Button
-                            className="w-80 justify-center items-center align-middle"
-                            onClick={handleResetPassword}
-                            disabled={isLoading} // Deshabilita mientras carga
-                        >
-                            {isLoading ? (
-                                <i className="pi pi-spin pi-spinner mr-2"></i> // Spinner
-                            ) : null}
-                            Restablecer Contraseña
-                        </Button>
+						<Button
+							className="w-80 justify-center items-center align-middle"
+							onClick={handleResetPassword}
+							disabled={isLoading} // Deshabilita mientras carga
+						>
+							{isLoading ? (
+								<i className="pi pi-spin pi-spinner mr-2"></i> // Spinner
+							) : null}
+							Restablecer Contraseña
+						</Button>
 					</div>
 				</div>
 			</Card>

@@ -26,16 +26,59 @@ const Index = lazy(() => import("../pages/reservations/index"));
 const Reservacion = lazy(() => import("../pages/reservations/reservacion"));
 const PanelReservations = lazy(() => import("../pages/panelReservations"));
 const Invitados = lazy(() => import("../pages/invitados"));
-const Adeudos = lazy(() => import("../pages/adeudos"));
-const ChangeInitialPassword = lazy(() => import("../pages/changeInitialPassword"));
+const ChangeInitialPassword = lazy(
+	() => import("../pages/changeInitialPassword")
+);
 const ResumenReservacion = lazy(() => import("../pages/detallesReservacion"));
-const AccountAdmin= lazy(() => import("../pages/accountAdmin"));
-const ResetPassword= lazy(() => import("../pages/resetPassword"));
-import { PalapaProvider } from "../context/PalapaContext"; // Importa el proveedor
+const AccountAdmin = lazy(() => import("../pages/accountAdmin"));
+const ResetPassword = lazy(() => import("../pages/resetPassword"));
+import { PalapaProvider } from "../context/PalapaContext";
 
 interface PrivateRouteProps {
 	children: ReactNode;
+	allowedRoles?: string[]; // Opcional para soportar rutas públicas
 }
+
+const PrivateRoute: React.FC<PrivateRouteProps> = ({
+	children,
+	allowedRoles,
+}) => {
+	const token = localStorage.getItem("authToken");
+
+	if (!token) {
+		return <Navigate to="/Login" />;
+	}
+
+	try {
+		const decodedToken = JSON.parse(atob(token.split(".")[1]));
+		const { role, exp } = decodedToken;
+
+		// Verificar si el token ha expirado
+		const currentTime = Math.floor(Date.now() / 1000); // Convertir a segundos
+		if (exp && currentTime > exp) {
+			localStorage.removeItem("authToken"); // Opcional, para limpiar el token caducado
+			return <Navigate to="/Login" />;
+		}
+
+		// Verificar si el rol está permitido
+		if (allowedRoles && !allowedRoles.includes(role)) {
+			// Redirección personalizada basada en el rol
+			switch (role) {
+				case "admin":
+					return <Navigate to="/PanelResevaciones" />;
+				case "empleado":
+					return <Navigate to="/Invitados" />;
+				default:
+					return <Navigate to="/unauthorized" />;
+			}
+		}
+
+		return <>{children}</>;
+	} catch (error) {
+		console.error("Error decodificando el token:", error);
+		return <Navigate to="/Login" />;
+	}
+};
 
 const Layout = () => {
 	const location = useLocation();
@@ -43,18 +86,18 @@ const Layout = () => {
 		"/LoginComunicacion",
 		"/panel",
 		"/Panel",
-	
 		"/Invitados",
 	];
 	const showNavbar =
 		!noNavbarRoutes.includes(location.pathname) &&
 		!noNavbarRoutes.includes(location.state?.from);
-		const role = getUserRole();
+	const role = getUserRole();
 
 	return (
 		<>
 			<div className="flex flex-col min-h-screen">
-			{showNavbar && ( role === "superadmin" ? <AdminNavbar /> : <Navbar />)}
+				{showNavbar &&
+					(role === "superadmin" ? <AdminNavbar /> : <Navbar />)}
 				<div className="flex-grow">
 					<Routes>
 						<Route path="/" element={<Home />} />
@@ -67,68 +110,92 @@ const Layout = () => {
 							path="/LoginComunicacion"
 							element={<LoginComunicacion />}
 						/>
-							{/* Envolvemos las rutas relacionadas con Palapas en el contexto local */}
-							<Route
-							path="/Palapas"
-							element={
-								<PalapaProvider>
-									<Palapas />
-								</PalapaProvider>
-							}
-						/>
-						<Route
-							path="/reservacion"
-							element={
-								<PalapaProvider>
-									<Reservacion />
-								</PalapaProvider>
-							}
-						/>
-						
 						<Route path="/Salones" element={<Salones />} />
-						<Route path="/Login/:isAdeudo" element={<Login />} />
+						<Route path="/Login" element={<Login />} />
 						<Route path="/index" element={<Index />} />
-						
 						<Route
-							path="/PanelResevaciones"
-							element={<PanelReservations />}
-						/>
-						<Route path="/Invitados" element={<Invitados />} />
-						<Route path="/Adeudos" element={<Adeudos />} />
-						<Route
-							path="/resumenReservacion"
-							element={<ResumenReservacion />}
+							path="/ResetPassword"
+							element={<ResetPassword />}
 						/>
 						<Route
 							path="/ChangeInitialPassword"
 							element={<ChangeInitialPassword />}
 						/>
 						<Route
-							path="/ResetPassword"
-							element={<ResetPassword />}
+							path="/Palapas"
+							element={
+								<PrivateRoute>
+									<PalapaProvider>
+										<Palapas />
+									</PalapaProvider>
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/reservacion"
+							element={
+								<PrivateRoute>
+									<PalapaProvider>
+										<Reservacion />
+									</PalapaProvider>
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/resumenReservacion"
+							element={
+								<PrivateRoute>
+									<PalapaProvider>
+										<ResumenReservacion />
+									</PalapaProvider>
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/PanelResevaciones"
+							element={
+								<PrivateRoute allowedRoles={["admin", "superadmin"]}>
+									<PanelReservations />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/Invitados"
+							element={
+								<PrivateRoute allowedRoles={["empleado", "superadmin"]}>
+									<Invitados />
+								</PrivateRoute>
+							}
 						/>
 						<Route
 							path="/AccountAdmin"
-							element={<AccountAdmin />}
+							element={
+								<PrivateRoute allowedRoles={["superadmin"]}>
+									<AccountAdmin />
+								</PrivateRoute>
+							}
 						/>
 						<Route
 							path="/Panel"
 							element={
-								<PrivateRoute>
+								<PrivateRouteComuni>
 									<Panel />
-								</PrivateRoute>
+								</PrivateRouteComuni>
 							}
+						/>
+						<Route
+							path="/unauthorized"
+							element={<div>No tienes acceso a esta página</div>}
 						/>
 					</Routes>
 				</div>
 				{showNavbar && <Footer />}
 			</div>
-			
 		</>
 	);
 };
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+const PrivateRouteComuni: React.FC<PrivateRouteProps> = ({ children }) => {
 	const token = localStorage.getItem("token");
 	return token ? <>{children}</> : <Navigate to="/LoginComunicacion" />;
 };

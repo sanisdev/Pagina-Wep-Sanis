@@ -9,15 +9,14 @@ import { changePassword } from "../services/api";
 import axios, { AxiosError } from "axios";
 type ToastSeverity = "success" | "info" | "warn" | "error";
 
-const ChangeInitialPassword  = () => {
-    
+const ChangeInitialPassword = () => {
 	const [numero_accion, setNumeroAccion] = useState<number>(0);
 	const [contrasena, setPassword] = useState<string>("");
-    const [newPassword, setNewPassword] = useState<string>("");
+	const [newPassword, setNewPassword] = useState<string>("");
 	const toast = useRef<Toast>(null);
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
-    useEffect(() => {
+	useEffect(() => {
 		toast.current?.show({
 			severity: "warn",
 			summary: "Primer Inicio de Sesion",
@@ -32,7 +31,8 @@ const ChangeInitialPassword  = () => {
 					</div>
 
 					<p className="m-0 text-sm">
-						Parece que es su primer Inicio de sesion porfavor cambie su contraseña.
+						Parece que es su primer Inicio de sesion porfavor cambie
+						su contraseña.
 					</p>
 					<Button
 						className="p-button-sm mt-2 text-sm "
@@ -44,69 +44,66 @@ const ChangeInitialPassword  = () => {
 			),
 		});
 	}, []);
-    
 
-    const handleLogin = async (event: React.FormEvent) => {
-        event.preventDefault();
-        console.log("Apretando Boton");
-        try {
-           await changePassword({
-                numero_accion: numero_accion,
-                currentPassword: contrasena,
-                newPassword: newPassword
-            });
-            navigate(-1);
-      
-            
-        } catch (error: unknown) {
-            console.log(error);
-            if (axios.isAxiosError(error)) {
-                const axiosError = error as AxiosError;
-                console.log("Error",axiosError)
-                if (axiosError.response) {
-                    if (axiosError.status === 404) {
-                        showToast(
-                            "error",
-                            "User Not Found",
-                            "El número de acción o la contraseña es incorrecta."
-                        );
-                    } else if (axiosError.status === 401) {
-                        showToast(
-                            "error",
-                            "Invalid Password",
-                            "La contraseña actual es incorrecta."
-                        );
-                    } else if (axiosError.status === 400) {
-                        showToast(
-                            "error",
-                            "Same Password",
-                            "La nueva contraseña no puede ser la misma que la contraseña actual."
-                        );
-                    } else {
-                        showToast(
-                            "error",
-                            "Internal Server Error",
-                            "Un error inesperado ocurrió, contacta al soporte técnico."
-                        );
-                    }
-                } else {
-                    showToast(
-                        "error",
-                        "Network Error",
-                        "Ocurrió un error de red."
-                    );
-                }
-            } else {
-                showToast(
-                    "error",
-                    "Unknown Error",
-                    "Por favor contacta al soporte técnico."
-                );
-            }
-        }
-    };
-
-    const showToast = (
+	const handleLogin = async (event: React.FormEvent) => {
+		event.preventDefault();
+		console.log("Apretando Botón");
+		try {
+			await changePassword({
+				numero_accion: numero_accion,
+				currentPassword: contrasena,
+				newPassword: newPassword,
+			});
+			navigate(-1);
+		} catch (error: unknown) {
+			console.log(error);
+			if (axios.isAxiosError(error)) {
+				const axiosError = error as AxiosError;
+				console.log("Error", axiosError);
+				if (axiosError.response) {
+					const status = axiosError.response.status; // Corregido: accede al status desde response
+					if (status === 404) {
+						showToast(
+							"error",
+							"User Not Found",
+							"El número de acción o la contraseña es incorrecta."
+						);
+					} else if (status === 401) {
+						showToast(
+							"error",
+							"Invalid Password",
+							"La contraseña actual es incorrecta."
+						);
+					} else if (status === 400) {
+						showToast(
+							"error",
+							"Same Password",
+							"La nueva contraseña no puede ser la misma que la contraseña actual."
+						);
+					} else {
+						showToast(
+							"error",
+							"Internal Server Error",
+							"Un error inesperado ocurrió, contacta al soporte técnico."
+						);
+					}
+				} else {
+					showToast(
+						"error",
+						"Network Error",
+						"Ocurrió un error de red."
+					);
+				}
+			} else {
+				showToast(
+					"error",
+					"Unknown Error",
+					"Por favor contacta al soporte técnico."
+				);
+			}
+		}
+	};
+	const showToast = (
 		severity: ToastSeverity,
 		summary: string,
 		detail: string
@@ -115,19 +112,41 @@ const ChangeInitialPassword  = () => {
 			toast.current.show({ severity, summary, detail });
 		}
 	};
-    return (
+	return (
 		<div className="flex justify-center align-middle items-center h-[90vh]">
 			<Toast ref={toast} />
 			<Card>
-				<div className="flex flex-col gap-4">
-					<h1>Cambiar Contraseña</h1>
-					<InputText
-						placeholder="Usuario"
-						onChange={(e) => setNumeroAccion(Number(e.target.value))}
-                        
-					/>
-                    <Password value={contrasena} onChange={(e) => setPassword(e.target.value)} toggleMask placeholder="Antigua Contraseña"/>
-					<Password value={newPassword} onChange={(e) => setNewPassword(e.target.value)} toggleMask placeholder="Nueva Contraseña"/>
+				<div className="flex flex-col gap-4 text-lg">
+					<h1 className="text-center text-xl font-bold ">Cambiar Contraseña</h1>
+					<div className="flex flex-col">
+						<label htmlFor="">Usuario</label>
+						<InputText
+							placeholder="Usuario"
+							onChange={(e) =>
+								setNumeroAccion(Number(e.target.value))
+							}
+						/>
+					</div>
+
+					<div className="flex flex-col">
+						<label htmlFor="">Antigua Contraseña</label>
+						<Password
+							value={contrasena}
+							onChange={(e) => setPassword(e.target.value)}
+							toggleMask
+							placeholder="Antigua Contraseña"
+						/>
+					</div>
+
+					<div className="flex flex-col">
+						<label htmlFor="">Nueva Contraseña</label>
+						<Password
+							value={newPassword}
+							onChange={(e) => setNewPassword(e.target.value)}
+							toggleMask
+							placeholder="Nueva Contraseña"
+						/>
+					</div>
 
 					<Button
 						className="w-full text-center justify-center"
@@ -141,5 +160,4 @@ const ChangeInitialPassword  = () => {
 	);
 };
 
- 
-export default ChangeInitialPassword  ;
+export default ChangeInitialPassword;

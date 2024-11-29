@@ -1,19 +1,19 @@
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { login, requestPasswordReset } from "../../services/api";
 import { useRef, useState } from "react";
 import { Toast } from "primereact/toast";
 import axios, { AxiosError } from "axios";
-import { Password } from "primereact/password";
+// import { Password } from "primereact/password";
 import { JwtPayload } from "../../interfaces/interfaces";
 import { Dialog } from "primereact/dialog";
 type ToastSeverity = "success" | "info" | "warn" | "error";
 
 const LoginReservations = () => {
-	const { isAdeudo } = useParams<{ isAdeudo: string }>();
+
 	const Navigate = useNavigate();
 	const [numero_accion, setNumeroAccion] = useState<string>("");
 	const [contrasena, setPassword] = useState<string>("");
@@ -166,75 +166,92 @@ const LoginReservations = () => {
 	};
 
 	return (
-		<div className="flex justify-center align-middle items-center h-[85vh]">
+		<div className="relative h-[85vh] w-screen overflow-hidden">
+		  {/* Video de fondo */}
+		  <video
+			className="absolute top-0 left-0 w-full h-full object-cover "
+			autoPlay
+			muted
+			loop
+			playsInline
+		  >
+			<source src="/assets/videos/v_login.mp4" type="video/mp4" />
+			Tu navegador no soporta video.
+		  </video>
+	  
+		  {/* Contenido principal */}
+		  <div className="relative z-10 flex flex-col justify-center items-center h-screen">
+			<div className="w-full bg-yellow-300 text-black text-center py-2">
+			  <p className="font-bold">Aviso: Esta aplicación está en pruebas.</p>
+			</div>
 			<Toast ref={toast} />
 			<Card>
-				<div className="flex flex-col gap-4">
-					<h1>Inicia Sesión</h1>
-					<InputText
-						placeholder="Usuario"
-						onChange={(e) => setNumeroAccion(e.target.value)}
-					/>
-					{/* <InputText
-						placeholder="Contraseña"
-						type="password"
-						onChange={(e) => setPassword(e.target.value)}
-					/> */}
-					<Password
-						value={contrasena}
-						onChange={(e) => setPassword(e.target.value)}
-						toggleMask
-						placeholder="contraseña"
-					/>
-
-					<Button
-						className="w-full text-center justify-center"
-						onClick={handleLogin}
-						disabled={loadingAction === "login"}
-					>
-						{loadingAction === "login" && (
-							<i className="pi pi-spin pi-spinner mr-2"></i>
-						)}
-						Iniciar Sesion
-					</Button>
-					<span
-						className="w-full text-center justify-center text-blue-500 cursor-pointer"
-						onClick={() => setShowDialog(true)}
-					>
-						¿Olvidaste tu contraseña?
-					</span>
-				</div>
+			  <div className="flex flex-col gap-4">
+				<h1 className="text-2xl text-center">Iniciar Sesión</h1>
+				<InputText
+				  placeholder="Usuario"
+				  onChange={(e) => setNumeroAccion(e.target.value)}
+				/>
+				<InputText
+				   placeholder="Contraseña"
+				  value={contrasena}
+				  onChange={(e) => setPassword(e.target.value)}
+				  
+				/>
+				{/* <Password
+				  value={contrasena}
+				  onChange={(e) => setPassword(e.target.value)}
+				  toggleMask
+				  placeholder="Contraseña"
+				/> */}
+				<Button
+				  className="w-full text-center justify-center"
+				  onClick={handleLogin}
+				  disabled={loadingAction === "login"}
+				>
+				  {loadingAction === "login" && (
+					<i className="pi pi-spin pi-spinner mr-2"></i>
+				  )}
+				  Iniciar Sesión
+				</Button>
+				<span
+				  className="w-full text-center justify-center text-blue-500 cursor-pointer"
+				  onClick={() => setShowDialog(true)}
+				>
+				  ¿Olvidaste tu contraseña?
+				</span>
+			  </div>
 			</Card>
 			<Dialog
-				header="Recuperar Contraseña"
-				visible={showDialog}
-				style={{ width: "400px" }}
-				onHide={() => setShowDialog(false)}
+			  header="Recuperar Contraseña"
+			  visible={showDialog}
+			  style={{ width: "400px" }}
+			  onHide={() => setShowDialog(false)}
 			>
-				<div className="flex flex-col gap-4">
-					<p>
-						Por favor, ingresa tu correo electrónico para
-						restablecer tu contraseña.
-					</p>
-					<InputText
-						placeholder="Correo Electrónico"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-					<Button
-						className="w-full"
-						onClick={handleRequestPasswordReset}
-						disabled={loadingAction === "requestPasswordReset"}
-					>
-						{loadingAction === "requestPasswordReset" && (
-							<i className="pi pi-spin pi-spinner mr-2"></i>
-						)}
-						Enviar Correo
-					</Button>
-				</div>
+			  <div className="flex flex-col gap-4">
+				<p>
+				  Por favor, ingresa tu correo electrónico para restablecer tu contraseña.
+				</p>
+				<InputText
+				  placeholder="Correo Electrónico"
+				  value={email}
+				  onChange={(e) => setEmail(e.target.value)}
+				/>
+				<Button
+				  className="w-full"
+				  onClick={handleRequestPasswordReset}
+				  disabled={loadingAction === "requestPasswordReset"}
+				>
+				  {loadingAction === "requestPasswordReset" && (
+					<i className="pi pi-spin pi-spinner mr-2"></i>
+				  )}
+				  Enviar Correo
+				</Button>
+			  </div>
 			</Dialog>
+		  </div>
 		</div>
-	);
+	  );
 };
 
 export default LoginReservations;

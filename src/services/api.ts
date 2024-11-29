@@ -20,7 +20,8 @@ import {
 	ResetPasswordDto,
 } from "../interfaces/interfaces";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://https.api-reservaciones.com";
+
 
 const api = axios.create({
 	baseURL: API_BASE_URL,
@@ -28,7 +29,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
 	(config) => {
-		const token = localStorage.getItem("token");
+		const token = localStorage.getItem("authToken");
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;
 		}
@@ -283,15 +284,24 @@ export const updateReservacion = async (
 	}
 };
 
-export const cancelarReservacion = async (id: number): Promise<any> => {
+export const cancelarReservacion = async (
+	id: number,
+	estatus: string
+): Promise<any> => {
 	try {
+		// Valida que el estatus sea válido
+		if (!["PENALIZADA", "CANCELADA"].includes(estatus)) {
+			throw new Error("Estatus inválido");
+		}
+
+		// Realiza la solicitud al endpoint con el estatus proporcionado
 		const response = await api.patch(
-			`/reservations/${id}/status/CANCELADA`
+			`/reservations/${id}/status/${estatus}`
 		);
 		return response.data;
-	} catch (error:any) {
+	} catch (error: any) {
 		console.error(
-			"Error al cancelar la reservación:",
+			`Error al cambiar el estatus de la reservación a ${estatus}:`,
 			error.response?.data || error.message
 		);
 		throw error;

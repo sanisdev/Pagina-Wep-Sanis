@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
 	CreateUserDto,
-	RegisterUserData,
 	SearchResponse,
 	Usuario,
 } from "../interfaces/interfaces";
@@ -19,7 +18,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tab } from "@headlessui/react";
 import { Message } from "primereact/message";
-import { Password } from "primereact/password";
+
 
 function classNames(...classes: string[]) {
 	return classes.filter(Boolean).join(" ");

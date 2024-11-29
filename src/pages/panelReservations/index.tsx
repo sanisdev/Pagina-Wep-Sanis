@@ -18,12 +18,10 @@ import {
 } from "../../services/api";
 import { DataTable, DataTableRowEditCompleteEvent } from "primereact/datatable";
 import { Column, ColumnEditorOptions } from "primereact/column";
-import { VirtualScroller } from "primereact/virtualscroller";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { Toast } from "primereact/toast";
 import { Dropdown } from "primereact/dropdown";
-import { InputNumber } from "primereact/inputnumber";
 
 // Configurar localizador de fechas
 const locales = {
@@ -66,6 +64,7 @@ export default function PanelReservations() {
 
 	// Manejar la navegación en el calendario y actualizar el mes actual
 	const handleNavigate = (date: Date) => {
+		setSelectedReservationIndex(null);
 		const newMonth = date.getMonth() + 1;
 		if (newMonth !== currentMonth) {
 			setCurrentMonth(newMonth); // Actualiza `currentMonth` y `useEffect` se encargará de la solicitud
@@ -187,7 +186,6 @@ export default function PanelReservations() {
 				onChange={(e) =>
 					options.editorCallback && options.editorCallback(e.checked)
 				}
-				
 			/>
 		);
 	};
@@ -214,6 +212,7 @@ export default function PanelReservations() {
 		{ label: "CONFIRMADA", value: "CONFIRMADA" },
 		{ label: "FINALIZADA", value: "FINALIZADA" },
 		{ label: "CANCELADA", value: "CANCELADA" },
+		{ label: "PENALIZADA", value: "PENALIZADA" },
 	];
 
 	// Manejar cambio de estatus
@@ -297,6 +296,8 @@ export default function PanelReservations() {
 								backgroundColor = "black";
 							} else if (event.estatus === "FINALIZADA") {
 								backgroundColor = "red";
+							} else if (event.estatus === "PENALIZADA") {
+								backgroundColor = "#7d3c98";
 							}
 
 							return {
@@ -340,6 +341,28 @@ export default function PanelReservations() {
 						</div>
 						{selectedReservationIndex !== null ? (
 							<div className="flex flex-col justify-around gap-2">
+								<div className="flex flex-row justify-between">
+									<p>
+										<strong>Numero de Accion:</strong>{" "}
+										{
+											reservations[
+												selectedReservationIndex
+											].usuario_id
+										}
+									</p>
+									<p>
+										<strong>Hora de Inicio:</strong>{" "}
+										{new Date(
+											reservations[
+												selectedReservationIndex
+											].hora_inicio
+										).toLocaleTimeString("es-MX", {
+											hour: "2-digit",
+											minute: "2-digit",
+										})}
+									</p>
+								</div>
+
 								<p>
 									<strong>Reservación de:</strong>{" "}
 									{
@@ -498,13 +521,17 @@ export default function PanelReservations() {
 										) {
 											backgroundColor = "orange";
 										} else if (
+											reservation.estatus === "ENPROCESO"
+										) {
+											backgroundColor = "blue";
+										} else if (
 											reservation.estatus === "CANCELADA"
 										) {
-											backgroundColor = "red";
+											backgroundColor = "black";
 										} else if (
 											reservation.estatus === "FINALIZADA"
 										) {
-											backgroundColor = "blue";
+											backgroundColor = "red";
 										}
 
 										return (

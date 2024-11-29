@@ -15,7 +15,7 @@ import { usePalapaContext } from "../../context/PalapaContext"; // Importa el co
 
 const Palapas = () => {
 	const navigate = useNavigate();
-	const [selectedDate] = useState<Date | null>(null);
+
 	const { selectedPalapa, setSelectedPalapa } = usePalapaContext(); // Usa el contexto
 	const [currentImage, setCurrentImage] = useState(0);
 
@@ -86,22 +86,100 @@ const Palapas = () => {
 	const handleReserveClick = () => {
 		navigate(`/reservacion`); // Navega sin pasar el ID como parámetro
 	};
-	const lorem =
-		" Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, odit enim sunt animi quidem ab debitis id eveniet hic quaerat possimus at nisi nobis sequi, voluptates doloribus voluptatum doloremque soluta. Lorem Et id commodo ullamco est esse consectetur ipsum ad minim magna. Officia laborum sint laboris ex pariatur. Magna velit cupidatat laborum commodo laboris voluptate consectetur velit culpa.";
+	// const lorem =
+	// 	" Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, odit enim sunt animi quidem ab debitis id eveniet hic quaerat possimus at nisi nobis sequi, voluptates doloribus voluptatum doloremque soluta. Lorem Et id commodo ullamco est esse consectetur ipsum ad minim magna. Officia laborum sint laboris ex pariatur. Magna velit cupidatat laborum commodo laboris voluptate consectetur velit culpa.";
 
 	const palapasInfo = [
 		{
 			id: 1,
 			name: "Palapa 1",
-			description: lorem,
+			description: [
+				"Capacidad 60 personas",
+				"Asador Gas/Carbón",
+				"Pantalla 50 Pulgadas Cable/Izzi",
+				"Hielera grande",
+				"Área de juegos pequeña",
+				"Calentador costo adicional $500",
+			],
 		},
-		{ id: 2, name: "Palapa 2", description: lorem },
-		{ id: 3, name: "Palapa 3", description: lorem },
-		{ id: 4, name: "Palapa 4", description: lorem },
-		{ id: 5, name: "Sarapera", description: lorem },
-		{ id: 6, name: "Capricho", description: lorem },
-		{ id: 7, name: "Palapa 6", description: lorem },
-		{ id: 8, name: "Palapa 7", description: lorem },
+		{
+			id: 2,
+			name: "Palapa 2",
+			description: [
+				"Capacidad 60 personas",
+				"Asador de carbón",
+				"Hielera grande",
+				"Calentador costo adicional $500",
+			],
+		},
+		{
+			id: 3,
+			name: "Palapa 3",
+			description: [
+				"Capacidad 40 Personas",
+				"Asador de carbón",
+				"Pantalla 55 Pulgadas Smart tv",
+				"Hielera grande",
+				"Calentador costo adicional $500",
+			],
+		},
+		{
+			id: 4,
+			name: "Palapa 4",
+			description: [
+				"Capacidad 60 personas",
+				"Área de juegos grande",
+				"Pantalla 55 pulgadas Smart tv",
+				"Asador de carbón",
+				"Hielera grande",
+				"Calentador costo adicional $500",
+			],
+		},
+		{
+			id: 5,
+			name: "Capricho",
+			description: [
+				"Capacidad 40 personas",
+				"Pantalla 50 pulgadas Smart tv",
+				"Asador de carbón",
+				"Hielera grande",
+				"Calentador costo adicional $500",
+			],
+		},
+		{
+			id: 6,
+			name: "Sarapera",
+			description: [
+				"Capacidad 30 personas",
+				"Pantalla 55 pulgadas Smart tv",
+				"Asador de carbón",
+				"Hielera grande",
+				"Calentador costo adicional $500",
+			],
+		},
+		{
+			id: 7,
+			name: "Palapa 6",
+			description: [
+				"Capacidad 90 personas",
+				"Área de juegos grande",
+				"Asador de carbón",
+				"Hielera grande",
+				"Kiosko",
+				"Calentador costo adicional $500",
+			],
+		},
+		{
+			id: 8,
+			name: "Palapa 7",
+			description: [
+				"Capacidad 70 personas",
+				"Área de juegos pequeña",
+				"Asador de carbón",
+				"Hielera grande",
+				"Calentador costo adicional $500",
+			],
+		},
 	];
 
 	return (
@@ -195,7 +273,7 @@ const Palapas = () => {
 				</div>
 			)}
 			{selectedPalapa !== null && (
-				<Card className="mt-6 p-4 w-[90vw] shadow-md animate-fade-in-down mb-4">
+				<Card className="mt-6 p-4 w-[90vw] max-h-[85vh] shadow-md animate-fade-in-down mb-4">
 					<div className="flex felx-row gap-2 mb-4 justify-between place-items-center  ">
 						<div className="flex flex-row">
 							<Button
@@ -213,8 +291,12 @@ const Palapas = () => {
 						</div>
 
 						<h2 className="text-2xl font-bold">
-              {palapasInfo.find((palapa) => palapa.id === selectedPalapa)?.name}
-            </h2>
+							{
+								palapasInfo.find(
+									(palapa) => palapa.id === selectedPalapa
+								)?.name
+							}
+						</h2>
 
 						<Button
 							label={
@@ -267,12 +349,18 @@ const Palapas = () => {
 					<Divider />
 					<div className="flex flex-col md:flex-row justify-between  pt-4">
 						<div className="md:w-1/2">
-							<h2 className="pt-4 font-bold text-xl">
-								Descripcion
+							<h2 className="pt-4 font-bold text-3xl">
+								Descripción
 							</h2>
-							<p className="p-4">
-								{palapasInfo[selectedPalapa - 1].description}
-							</p>
+							<ul className="list-disc pl-6 text-xl ">
+								{palapasInfo[
+									selectedPalapa - 1
+								].description.map((item, index) => (
+									<li key={index} className="py-2">
+										{item}
+									</li>
+								))}
+							</ul>
 						</div>
 
 						<div className="flex flex-col md:w-1/2">
@@ -282,7 +370,7 @@ const Palapas = () => {
 							<img
 								src={Constants.mapa}
 								alt=""
-								className="w-[800px] h-[380px] "
+								className="w-[800px] h-80 "
 							/>
 						</div>
 					</div>

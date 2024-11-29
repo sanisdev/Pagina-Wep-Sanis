@@ -117,7 +117,7 @@ const Navbar = () => {
 						/>
 					),
 					className: "bg-slate-100 md:bg-white",
-					command: () => Navigate(`/Login/${false}`),
+					command: () => Navigate(`/Login`),
 					// command: () => Navigate("Tournaments"),
 				},
 				// {
@@ -192,36 +192,36 @@ const Navbar = () => {
 						},
 					],
 				},
-				{
-					label: "Adeudos",
-					icon: "pi pi-wallet",
-					// (
-					// 	<IconSvg
-					// 		src={SvgIcon2}
-					// 		alt="Salones"
-					// 		ancho="1.5rem"
-					// 		largo="1.5rem"
-					// 	/>
-					// ),
-					className: "bg-slate-100 md:bg-white",
-					// command: () => Navigate("Tournaments"),
-					command: () => Navigate(`/Login/${true}`),
-				},
-				{
-					label: "Detalles",
-					icon: "pi pi-wallet",
-					// (
-					// 	<IconSvg
-					// 		src={SvgIcon2}
-					// 		alt="Salones"
-					// 		ancho="1.5rem"
-					// 		largo="1.5rem"
-					// 	/>
-					// ),
-					className: "bg-slate-100 md:bg-white",
-					// command: () => Navigate("Tournaments"),
-					command: () => Navigate(`/resumenReservacion`),
-				},
+				// {
+				// 	label: "Adeudos",
+				// 	icon: "pi pi-wallet",
+				// 	// (
+				// 	// 	<IconSvg
+				// 	// 		src={SvgIcon2}
+				// 	// 		alt="Salones"
+				// 	// 		ancho="1.5rem"
+				// 	// 		largo="1.5rem"
+				// 	// 	/>
+				// 	// ),
+				// 	className: "bg-slate-100 md:bg-white",
+				// 	// command: () => Navigate("Tournaments"),
+				// 	command: () => Navigate(`/Login/${true}`),
+				// },
+				// {
+				// 	label: "Detalles",
+				// 	icon: "pi pi-wallet",
+				// 	// (
+				// 	// 	<IconSvg
+				// 	// 		src={SvgIcon2}
+				// 	// 		alt="Salones"
+				// 	// 		ancho="1.5rem"
+				// 	// 		largo="1.5rem"
+				// 	// 	/>
+				// 	// ),
+				// 	className: "bg-slate-100 md:bg-white",
+				// 	// command: () => Navigate("Tournaments"),
+				// 	command: () => Navigate(`/resumenReservacion`),
+				// },
 			],
 		},
 		{
@@ -286,12 +286,7 @@ const Navbar = () => {
 					className: "bg-slate-100 ",
 					url: "https://shorturl.at/OYEDi",
 				},
-				{
-					label:"Lista de Invitados",
-					icon: "pi pi-user",
-					className:"bg-slate-100",
-					command:() => Navigate("AccountAdmin")
-				}
+				
 			],
 		},
 	];

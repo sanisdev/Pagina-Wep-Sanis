@@ -99,6 +99,7 @@ export interface Reservacion {
 	notas: string; // Notas adicionales
 	invitados: Invitado[]; // Lista de invitados
 	estatus: string; // Lista de invitados
+	tablon:boolean
 }
 
 // Interfaz para la respuesta de la API
